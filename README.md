@@ -1,4 +1,4 @@
 Flask-Gasket
 ============
 
-Flask plugin for building REST APIs with Riak.
+Flask extension for building REST APIs with Riak.
