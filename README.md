@@ -17,10 +17,15 @@ Example
 This example creates an basic API for user signup, login, authentication, and post creation and retrieval.
 
 1) Install `Riak` (http://docs.basho.com/riak/latest/tutorials/installation/)
+
 2) Make sure `secondary indexes` (http://docs.basho.com/riak/1.2.1/cookbooks/Secondary-Indexes---Configuration/) are enabled by setting LevelDB in app.config
+
 3) Run: "riak start" in terminal to start riak
+
 4) Run: "cd example & ln -s ../flask_gasket ."
+
 5) Run: "python start.py" which runs the Flask server on port 5600
+
 6) In a separate terminal run: "python test.py" to test server
 
 Documentation
