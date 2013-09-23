@@ -33,6 +33,9 @@ def invalidObject(objList):
 	return {'status':'error','code':410,
 		'message':'invalid json, expected object request: ' + str(commandsList)}
 
+def createError(code,msg):
+	return (False,nitro.control.jsonError(code,msg))
+
 #############################
 
 def _decode_list(data):

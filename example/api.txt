@@ -1,0 +1,189 @@
+--------------------
+url: /api/user/<userID>
+command: get
+
+comment: get user from url
+
+recv:
+	command: get
+
+send:
+	code: 200
+	status: success
+	bio: <optional>
+	createdAt: <string>
+	email: <string>
+	name: <string>
+	numPosts: <string>
+	token: <optional>
+	userID: <string>
+	username: <string>
+
+--------------------
+url: /api/user/<userID>
+command: logout
+
+comment: logout user logged in user
+
+recv:
+	command: logout
+	token: <string>
+
+send:
+	code: 200
+	status: success
+
+--------------------
+url: /api/user/<userID>
+command: login
+
+comment: login user
+
+recv:
+	command: login
+	password: <string>
+
+send:
+	code: 200
+	status: success
+	bio: <optional>
+	createdAt: <string>
+	email: <string>
+	name: <string>
+	numPosts: <string>
+	token: <optional>
+	userID: <string>
+	username: <string>
+
+--------------------
+url: /api/user/<userID>/posts
+command: get
+
+comment: get posts of user from url
+
+recv:
+	command: get
+	page: <optional>
+
+send:
+	code: 200
+	status: success
+	list:
+		createdAt: <string>
+		name: <string>
+		postID: <string>
+		text: <string>
+		userID: <string>
+		username: <string>
+
+--------------------
+url: /api/user
+command: get
+
+comment: get user
+
+recv:
+	command: get
+	username: <string>
+
+send:
+	code: 200
+	status: success
+	bio: <optional>
+	createdAt: <string>
+	email: <string>
+	name: <string>
+	numPosts: <string>
+	token: <optional>
+	userID: <string>
+	username: <string>
+
+--------------------
+url: /api/user
+command: login
+
+comment: login user
+
+recv:
+	command: login
+	password: <string>
+	username: <string>
+
+send:
+	code: 200
+	status: success
+	bio: <optional>
+	createdAt: <string>
+	email: <string>
+	name: <string>
+	numPosts: <string>
+	token: <optional>
+	userID: <string>
+	username: <string>
+
+--------------------
+url: /api/user
+command: signup
+
+comment: signup user
+
+recv:
+	command: signup
+	bio: <optional>
+	email: <string>
+	name: <string>
+	password: <string>
+	username: <string>
+
+send:
+	code: 200
+	status: success
+	bio: <optional>
+	createdAt: <string>
+	email: <string>
+	name: <string>
+	numPosts: <string>
+	token: <optional>
+	userID: <string>
+	username: <string>
+
+--------------------
+url: /api/user/post/<postID>
+command: get
+
+comment: get post
+
+recv:
+	command: get
+
+send:
+	code: 200
+	status: success
+	createdAt: <string>
+	name: <string>
+	postID: <string>
+	text: <string>
+	userID: <string>
+	username: <string>
+
+--------------------
+url: /api/user/post
+command: create
+
+comment: create post
+
+recv:
+	command: create
+	text: <string>
+	token: <string>
+
+send:
+	code: 200
+	status: success
+	createdAt: <string>
+	name: <string>
+	postID: <string>
+	text: <string>
+	userID: <string>
+	username: <string>
+

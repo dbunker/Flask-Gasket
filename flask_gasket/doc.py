@@ -166,7 +166,7 @@ def writeDoc(firstOut):
 	baseDict = conf['_route']['api']
 	toStr = { 'str':'' }
 
-	models = nitro.route.readModels(conf)
+	models = route.readModels(conf)
 	fullDict = conf
 	fullDict['_models'] = models
 
@@ -178,7 +178,7 @@ def writeDoc(firstOut):
 
 	writeOut = firstOut + toStr['str']
 
-	toFile = open('doc.txt','w')
+	toFile = open('api.txt','w')
 	toFile.write(writeOut)
 	toFile.close()
 

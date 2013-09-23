@@ -1,0 +1,240 @@
+{
+    "_model": {
+        "_assume": {
+            "_type": "_string",
+            "_server": [
+                "_value"
+            ],
+            "_client": [
+                "_send",
+                "_recv"
+            ]
+        },
+        "user": {
+            "userID": {
+                "_type": "_primary",
+                "_client": [
+                    "_send"
+                ]
+            },
+            "username": {
+                "_server": [
+                    "_index"
+                ],
+                "_unique": true
+            },
+            "email": {
+                "_server": [
+                    "_index"
+                ],
+                "_unique": true
+            },
+            "serverToken": {
+                "_client": [],
+                "_optional": true
+            },
+            "token": {
+                "_server": [],
+                "_client": [
+                    "_send"
+                ],
+                "_optional": true
+            },
+            "hashpass": {
+                "_client": []
+            },
+            "password": {
+                "_server": [],
+                "_client": [
+                    "_recv"
+                ]
+            },
+            "name": {},
+            "bio": {
+                "_optional": true
+            },
+            "numPosts": {
+                "_type": "_counter_list",
+                "_counter_list": {
+                    "other_model": "post",
+                    "other_id": "userID"
+                },
+                "_client": [
+                    "_send"
+                ]
+            },
+            "createdAt": {
+                "_type": "_created",
+                "_client": [
+                    "_send"
+                ]
+            }
+        },
+        "post": {
+            "postID": {
+                "_type": "_primary",
+                "_client": [
+                    "_send"
+                ]
+            },
+            "userID": {
+                "_type": "_model_user",
+                "_server": [
+                    "_index"
+                ],
+                "_client": [
+                    "_send"
+                ]
+            },
+            "username": {
+            	"_client": [
+                    "_send"
+                ]
+            },
+            "name": {
+            	"_client": [
+                    "_send"
+                ]
+            },
+            "text": {},
+            "createdAt": {
+                "_type": "_created",
+                "_client": [
+                    "_send"
+                ]
+            }
+        }
+    },
+    "_route": {
+        "_funcs": {
+            "authorize": {
+                "_func": "authorize",
+                "_recv": {
+                    "token": {
+                        "_type": "_string"
+                    }
+                },
+                "_send": {},
+                "_args": {
+                    "_recv": "_any"
+                },
+                "_return": {
+                    "user": "_any"
+                }
+            },
+            "userSend": {
+                "_func": "userSend",
+                "_send": "_model_user"
+            },
+            "postSend": {
+                "_func": "postSend",
+                "_send": "_model_post"
+            },
+            "postSendList": {
+                "_func": "postSendList",
+                "_send": "_list_model_post"
+            }
+        },
+        "_assume": {
+            "_recv": {},
+            "_send": {}
+        },
+        "api": {
+            "user": {
+                "_": [
+                    {
+                        "_#": "signup user",
+                        "_command": "signup",
+                        "_func": "signup",
+                        "_recv": "_model_user",
+                        "_post": "userSend"
+                    },
+                    {
+                        "_#": "login user",
+                        "_command": "login",
+                        "_func": "login",
+                        "_recv": {
+                            "username": {
+                                "_type": "_string"
+                            },
+                            "password": {
+                                "_type": "_string"
+                            }
+                        },
+                        "_post": "userSend"
+                    },
+                    {
+                        "_#": "get user",
+                        "_command": "get",
+                        "_func": "getUserByName",
+                        "_recv": {
+                            "username": {
+                                "_type": "_string"
+                            }
+                        },
+                        "_post": "userSend"
+                    }
+                ],
+                "<userID>": {
+                    "_": [
+                        {
+                            "_#": "login user",
+                            "_command": "login",
+                            "_func": "login",
+                            "_recv": {
+                                "password": {
+                                    "_type": "_string"
+                                }
+                            },
+                            "_post": "userSend"
+                        },
+                        {
+                            "_#": "logout user logged in user",
+                            "_command": "logout",
+                            "_func": "logout",
+                            "_pre": "authorize"
+                        },
+                        {
+                            "_#": "get user from url",
+                            "_command": "get",
+                            "_func": "getUserByID",
+                            "_post": "userSend"
+                        }
+                    ],
+                    "posts": {
+                        "_": [
+                            {
+                                "_#": "get posts of user from url",
+                                "_command": "get",
+                                "_func": "getUserPosts",
+                                "_post": "postSendList"
+                            }
+                        ]
+                    }
+                },
+                "post": {
+                    "_": [
+                        {
+                            "_#": "create post",
+                            "_command": "create",
+                            "_func": "createPost",
+                            "_pre": "authorize",
+                            "_recv": "_model_post",
+                            "_post": "postSend"
+                        }
+                    ],
+                    "<postID>": {
+                        "_": [
+                            {
+                                "_#": "get post",
+                                "_command": "get",
+                                "_func": "getPost",
+                                "_post": "postSend"
+                            }
+                        ]
+                    }
+                }
+            }
+        }
+    }
+}
